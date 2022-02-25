@@ -1,0 +1,127 @@
+* {
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+body {
+    display: block;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #222327;
+}
+.inputText {
+    padding: 4px 5px;
+    margin: 2px auto;
+    vertical-align: middle;
+    width: 350px;
+    font-size: 14px;
+    border: 1px solid #87ceeb;
+    border-radius: 3px;
+}
+.headerSortDown:after,
+.headerSortUp:after {
+  position: relative;
+  left: clamp(20px, 50%, 100px);
+  border: 8px solid transparent;
+  cursor: pointer;
+  content: ' ';
+}
+.headerSortDown:after {
+  top: 10px;
+  border-top-color: silver;
+}
+.headerSortUp:after {
+  bottom: 15px;
+  border-bottom-color: silver;
+}
+.headerSortDown,
+.headerSortUp {
+  padding-right: 10px;
+}
+.navigation {
+    position: relative;
+    width: 400px;
+    height: 60px;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.card-box {
+    border-radius: 0.5rem;
+    height: auto;
+    width: clamp(450px, 50%, 550px);
+    margin: 0 auto;
+}
+.card-box ul {
+    margin-bottom: 0;
+}
+.card-box ul li {
+    list-style: none;
+    display: inline-block;
+    margin-right: 3px;
+    border: 1px solid #e3e3e3;
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 13px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    border-bottom: 0;
+    color: #555;
+}
+.card-box ul li.active {
+    background-color: #007bff;
+    border: 1px solid #0a459e;
+    border-bottom: 0;
+    color: #fff;
+}
+.table > tbody > tr > td {
+    vertical-align: middle;
+}
+.form-box {
+    width: clamp(450px, 50%, 550px);
+    border: 1px solid #ccc;
+    padding: 1.5rem;
+    margin: 0 auto;
+    border-radius: 5px;
+    border-top-left-radius: 0;
+}
+.form-box label,
+.form-group label {
+    width: 100px;
+}
+.form-box input {
+    display: block;
+    width: 100%;
+    padding: 0.25rem;
+    border-radius: 3px;
+    border: 1px solid #87ceeb;
+}
+.form-box input:focus {
+    border-color: tomato;
+}
+.input-group {
+    margin: 1rem 0;
+}
+.btn-group {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
+}
+.form-login-box {
+    width: clamp(450px, 50%, 550px);
+    border: 1px solid #ccc;
+    padding: 1.5rem;
+    margin: 0 auto;
+    border-radius: 5px;
+    margin-bottom: 30px;
+}
+.addMore {
+    padding: 0px 7px;
+    width: 1.5rem;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    border-radius: 3px;
+}
