@@ -5,25 +5,26 @@ import { useFormValidator } from "./../FormValidator";
 const AddCustomerContainer = () => {
   let initialState = {
     mode: "I",
+    CustomerID: "",
     CustomerName: "",
-    Zone: "",
     City: "",
+    Zone: "",
     errors: {
+      CustomerID: "",
       CustomerName: "",
       City: "",
+      Zone: "",
     },
   };
 
-  const { onHandleChange, onHandleSubmit, onHandleBlur, fields } =
-    useFormValidator(initialState);
+  const { onHandleChange, onHandleSubmit, onHandleBlur, fields } = useFormValidator(initialState);
 
   const { errors } = fields;
 
   const onAddCustomerDataHandler = (event) => {
     event.preventDefault();
     if (onHandleSubmit(event)) {
-      /* call apiHandler to save data */
-      console.log(fields);
+      // perform add operation
     }
   };
 

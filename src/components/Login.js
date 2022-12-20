@@ -8,17 +8,20 @@ const Login = () => {
   const history = useHistory();
 
   const initialState = {
-    mode: "I",
     email: "",
     password: "",
     errors: {
       email: "",
-      password: "",
-    },
+      password: ""
+    }
   };
 
-  const { onHandleChange, onHandleSubmit, onHandleBlur, fields } =
-    useFormValidator(initialState);
+  const {
+    onHandleChange,
+    onHandleSubmit,
+    onHandleBlur,
+    fields
+  } = useFormValidator(initialState);
 
   const { errors } = fields;
 
@@ -26,12 +29,10 @@ const Login = () => {
     inputEmailRef.current.focus();
   }, []);
 
-  const onLogin = (event) => {
+  const onLoginHandler = event => {
     event.preventDefault();
 
     if (onHandleSubmit(event)) {
-      console.log(fields);
-      console.log("validated");
       history.push("/home");
     } else {
       console.log("not validated");
@@ -39,9 +40,9 @@ const Login = () => {
   };
 
   return (
-    <>
-      <div className="form-login-box text-center">
-        <form className="form-label" onSubmit={(event) => onLogin(event)}>
+    <section id="login-page">
+      <div className="form-login-box">
+        <form className="form-label" onSubmit={event => onLoginHandler(event)}>
           <img
             className="mb-4"
             src="/assets/public/dist/img/user-login.jpg"
@@ -49,7 +50,7 @@ const Login = () => {
             width="72"
             height="72"
           />
-          <h1 className="h3 mb-3">Please sign in</h1>
+          <h1 className="h3 mb-3">Sign in</h1>
           <div className="form-group">
             <label htmlFor="inputEmail" className="sr-only">
               Email address
@@ -90,10 +91,10 @@ const Login = () => {
           <div className="m-2">
             <button className="btn btn-sm btn-primary">Sign in</button>
           </div>
-          <p className="mt-4 mb-3 text-muted">&copy; 2021</p>
+          <p className="mt-4 mb-3 text-muted">&copy; 2022</p>
         </form>
       </div>
-    </>
+    </section>
   );
 };
 

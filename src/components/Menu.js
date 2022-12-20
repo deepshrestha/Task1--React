@@ -47,7 +47,7 @@ const Menu = () => {
           >
             <li className="nav-item has-treeview menu-open">
               <a href="#" className="nav-link active">
-                <i className="nav-icon fas fa-tachometer-alt"></i>
+                <i className="nav-icon fas fa-user"></i>
                 <p>
                   Customer
                   <i className="right fas fa-angle-left"></i>
@@ -57,7 +57,7 @@ const Menu = () => {
                 <li className="nav-item">
                   <Link
                     to="/customer/list"
-                    className={`nav-link ${slug == "list" ? "active" : ""}`}
+                    className={`nav-link ${(slug == "list" || slug == "edit") ? "active" : ""}`}
                   >
                     <i className="far fa-circle nav-icon"></i>
                     <p>List Customer</p>

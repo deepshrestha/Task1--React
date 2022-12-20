@@ -1,0 +1,14 @@
+[
+    {
+      "CustomerID": 1,
+      "CustomerName": "Aakriti Sharma",
+      "City": "Lalitpur",
+      "Zone": "Bagmati"
+    },
+    {
+      "CustomerID": 2,
+      "CustomerName": "Piyush Dahal",
+      "City": "Kathmandu",
+      "Zone": "Bagmati"
+    }
+  ]

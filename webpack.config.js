@@ -51,6 +51,10 @@ module.exports = {
                     from: 'public/dist/**', to: 'assets'
                 },
                 { 
+                    from: 'public/images/**', to: 'assets'
+                },
+                
+                { 
                     from: 'public/plugins/**', to: 'assets'
                 },
             ]

@@ -1,34 +1,28 @@
-const useFormValidator = (props) => {
+const useFormValidator = props => {
   const { useState } = require("react");
   const [fields, setFields] = useState(props);
 
   const emailPattern = RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
 
-  const formValid = function (errors) {
+  const formValid = function(errors) {
     let valid = true;
-    Object.values(errors).map(function (value) {
+    Object.values(errors).forEach(function(value) {
       value.length !== 0 && (valid = false);
     });
 
     return valid;
   };
 
-  const onHandleSubmit = (event) => {
+  const onHandleSubmit = event => {
     event.preventDefault();
     let errors = fields.errors;
-    Object.keys(errors).map((error, index) => {
+    Object.keys(errors).map(error => {
       if (event.target[error] !== undefined && fields[error] !== null)
         validate(
           error,
-          event.target[error].placeholder === undefined
-            ? event.target[error][0].placeholder === undefined
-              ? event.target[error].options[0].innerHTML
-              : event.target[error][0].placeholder
-            : event.target[error].placeholder,
+          event.target[error].placeholder,
           fields[error],
-          event.target[error].type === undefined
-            ? event.target[error][0].type
-            : event.target[error].type,
+          event.target[error].type,
           fields.errors
         );
     });
@@ -38,11 +32,9 @@ const useFormValidator = (props) => {
       return true;
     } else {
       let errors = fields.errors;
-
-      Object.keys(errors).every(function (key) {
+      Object.keys(errors).every(function(key) {
         if (errors[key].length > 0) {
-          if (key === "radio") event.target[key][0].focus();
-          else event.target[key].focus();
+          event.target[key].focus();
           return false;
         } else {
           return true;
@@ -53,46 +45,17 @@ const useFormValidator = (props) => {
     }
   };
 
-  const doValidate = (event) => {
+  const doValidate = event => {
     const { name, placeholder, value, type } = event.target;
     let errors = fields.errors;
-    if (type === "select-multiple") {
-      let optionValue = Array.from(
-        event.target.selectedOptions,
-        (option) => option.value
-      );
-      validate(
-        name,
-        placeholder === undefined
-          ? event.target.options[0].innerHTML
-          : placeholder,
-        optionValue,
-        type,
-        errors
-      );
-    } else if (type === "file") {
-      let fileDescriptor = event.target.files[0];
-      validate(
-        name,
-        placeholder === undefined || placeholder === ""
-          ? event.target.files[0].name
-          : placeholder,
-        fileDescriptor,
-        type,
-        errors
-      );
-    } else validate(name, placeholder, value, type, errors);
+    validate(name, placeholder, value, type, errors);
   };
 
-  const onHandleChange = (event) => {
+  const onHandleChange = event => {
     doValidate(event);
   };
 
-  const onHandleBlur = (event) => {
-    doValidate(event);
-  };
-
-  const onHandleFileUpload = (event) => {
+  const onHandleBlur = event => {
     doValidate(event);
   };
 
@@ -100,18 +63,8 @@ const useFormValidator = (props) => {
     switch (type) {
       case "text":
       case "password":
-      case "textarea":
-      case "select-one":
-      case "select-multiple":
         errors[name] =
           value.length == 0 && props.errors.hasOwnProperty(name)
-            ? `The ${placeholder ?? name} field is required`
-            : "";
-        break;
-      case "checkbox":
-      case "radio":
-        errors[name] =
-          document.querySelector(`input[type=${type}]:checked`) === null
             ? `The ${placeholder ?? name} field is required`
             : "";
         break;
@@ -120,54 +73,31 @@ const useFormValidator = (props) => {
           value.length == 0 && props.errors.hasOwnProperty(name)
             ? `The ${placeholder ?? name} field is required`
             : !emailPattern.test(value) && props.errors.hasOwnProperty(name)
-            ? "The Email is invalid!"
+            ? "The Email is invalid"
             : "";
-        break;
-      case "file":
-        errors[name] =
-          value.length == 0 && props.errors.hasOwnProperty(name)
-            ? `The ${placeholder ?? name} field is required`
-            : "";
-      default:
         break;
     }
 
     setFields({
       ...fields,
       [name]: value,
-      errors,
+      errors
     });
   };
 
-  const resetForm = (event) => {
+  const resetForm = event => {
     let resetFields = {
-      ...props,
+      ...props
     };
-    Object.keys(fields).forEach((field) => {
+    Object.keys(fields).forEach(field => {
       if (event.target[field] !== undefined) {
         event.target[field].value = "";
-
-        let checkboxElement = document.querySelectorAll(
-          "input[type='checkbox']"
-        );
-        if (checkboxElement.length > 0) {
-          checkboxElement.forEach((element) => {
-            element.checked = false;
-          });
-        }
-
-        let radioElement = document.querySelectorAll("input[type='radio']");
-        if (radioElement.length > 0) {
-          radioElement.forEach((element) => {
-            element.checked = false;
-          });
-        }
       }
     });
 
     setFields({
       ...fields,
-      ...resetFields,
+      ...resetFields
     });
   };
 
@@ -175,17 +105,16 @@ const useFormValidator = (props) => {
     onHandleChange,
     onHandleSubmit,
     onHandleBlur,
-    onHandleFileUpload,
     fields,
-    setFields,
+    setFields
   };
 };
 
-const errorMessage = (errorMsg) => {
+const errorMessage = errorMsg => {
   return errorMsg;
 };
 
 module.exports = {
   useFormValidator,
-  errorMessage,
+  errorMessage
 };

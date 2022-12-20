@@ -1,36 +1,22 @@
 import { useEffect, useState } from 'react'
+import {apiHandler} from './../api/apiHandler'
 
 export const useHttp = (props) => {
 
-    const [{url, pagination}, setData] = useState(props);
+    const [data, setData] = useState(props);
 
     useEffect(() => {
-        fetch(url)
-        .then(data => {
-            return data.json();
-        })
+        apiHandler()
         .then( data => {
-            setData(
-                {
-                    url,
-                    pagination: {
-                        ...pagination,
-                        data: data,
-                        totalRecordsCount: data.length
-                    }  
-                }
-            );
+            setData(data);
         })
         .catch(err => {
             console.log(err)
         })
      }, []);
 
-    return [
-        {
-            url,
-            pagination
-        },
+    return {
+        data,
         setData
-    ]
+    }
 }

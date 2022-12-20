@@ -1,41 +1,27 @@
 import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { onFetchCustomerData } from "./../actions/customerAction";
 import CustomerList from "./../components/customer/CustomerList";
+import { useHttp } from "./../hooks/useHTTP";
 
 const ListCustomerContainer = () => {
-  const [customers, setCustomers] = useState([]);
+
+  const { data } = useHttp();
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    onGetCustomerDataHandler();
-  }, []);
-
-  const onGetCustomerDataHandler = () => {
-
-    /* call apiHandler to fetch data */
-    let data = [
-      {
-        CustomerID: 1,
-        CustomerName: "Deep Shrestha",
-        City: "Lalitpur",
-        Zone: "Bagmati",
-      },
-      {
-        CustomerID: 2,
-        CustomerName: "Deepak Shrestha",
-        City: "Kathmandu",
-        Zone: "Bagmati",
-      },
-    ];
-    setCustomers(data);
-  };
+    dispatch(onFetchCustomerData(data))
+  }, [data]);
 
   const onDeleteCustomerDataHandler = (e, id) => {
+    // perform delete operation
     e.preventDefault();
-    /* call apiHandler function to delete data*/
     return true;
   };
 
   return (
     <CustomerList
-      data={customers}
+      data={data}
       onDeleteCustomerDataHandler={onDeleteCustomerDataHandler}
     />
   );

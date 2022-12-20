@@ -1,26 +1,28 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
+
 const CustomerList = ({ data, onDeleteCustomerDataHandler }) => {
   const history = useHistory();
+
   const onEditCustomerDataHandler = (id) => {
     history.push(`/customer/edit/${id}`);
   };
   return (
-    <div className="content-wrapper">
-      <>
+    <div className="content m-5">
+      <React.Fragment>
         {data && (
-          <table className="table">
+          <table className="table table-hover">
             <thead>
               <tr>
-                <th scope="col">Customer ID</th>
+                <th scope="col" width="10%">Sno</th>
                 <th scope="col">Customer Name</th>
                 <th scope="col">City</th>
                 <th scope="col">Zone</th>
-                <th scope="col">Actions</th>
+                <th scope="col" width="15%">Action</th>
               </tr>
             </thead>
             <tbody>
-              {data.map((customer, index) => {
+              {data.map(customer => {
                 return (
                   <tr key={customer.CustomerID}>
                     <td>{customer.CustomerID}</td>
@@ -34,16 +36,16 @@ const CustomerList = ({ data, onDeleteCustomerDataHandler }) => {
                           onEditCustomerDataHandler(customer.CustomerID)
                         }
                       >
-                        Edit
+                        <i className="fa fa-edit"></i>
                       </button>
                       &nbsp;
                       <button
                         className="btn btn-danger"
-                        onClick={(e) =>
+                        onClick={e =>
                           onDeleteCustomerDataHandler(e, customer.CustomerID)
                         }
                       >
-                        Delete
+                        <i className="fa fa-trash"></i>
                       </button>
                     </td>
                   </tr>
@@ -52,7 +54,7 @@ const CustomerList = ({ data, onDeleteCustomerDataHandler }) => {
             </tbody>
           </table>
         )}
-      </>
+      </React.Fragment>
     </div>
   );
 };

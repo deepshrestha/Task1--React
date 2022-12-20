@@ -1,83 +1,60 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { onFetchCustomerDataByID } from "./../actions/customerAction";
-import { apiHandler } from "./../api/apiHandler";
 import CustomerEdit from "../components/customer/CustomerEdit";
 import { useFormValidator } from "./../FormValidator";
+import { onFetchCustomerDataByID } from "../actions/customerAction";
+import { useHttp } from "./../hooks/useHTTP";
 
 const EditCustomerContainer = ({ match }) => {
-  const history = useHistory();
 
   let initialState = {
     mode: "U",
+    CustomerID: "",
     CustomerName: "",
-    Zone: "",
     City: "",
+    Zone: "",
     errors: {
+      CustomerID: "",
       CustomerName: "",
       City: "",
+      Zone: "",
     },
   };
 
-  const { onHandleChange, onHandleSubmit, onHandleBlur, fields, setFields } =
-    useFormValidator(initialState);
+  const { data } = useHttp();
+  const { onHandleChange, onHandleSubmit, fields, setFields } = useFormValidator(initialState);
 
   const { errors } = fields;
 
   const { id } = match.params;
-  const customerData = useSelector((state) => {
+
+  const customerData = useSelector(state => {
+    console.log(state)
     return {
-      customer: state.customer.customer
+      customer: state.customerReducer.customers.length > 0 
+        ? state.customerReducer.customers.find(customer => customer.CustomerID === +id)
+        : data?.find(customer => customer.CustomerID === +id)
     };
   });
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    onGetDataByIdHandler(id);
+    dispatch(onFetchCustomerDataByID(customerData));
   }, []);
 
-  const onGetDataByIdHandler = (id) => {
-    //console.log(id)
-    apiHandler(`http://localhost:3000/api/customerdata/${id}`)
-      .then((result) => {
-        setFields({
-          ...fields,
-          CustomerID: result[0].CustomerID,
-          CustomerName: result[0].CustomerName,
-          Zone: result[0].Zone,
-          City: result[0].City,
-        });
-        dispatch(onFetchCustomerDataByID(result));
-      })
-      .catch((err) => {
-        alert(err);
-      });
-  };
-
-  const onEditCustomerDataHandler = (e) => {
+  const onEditustomerDataHandler = (e) => {
     e.preventDefault();
     if(onHandleSubmit(e)){
-      apiHandler(
-      `http://localhost:3000/api/customerdata/edit/${id}`,
-      "put",
-      fields
-    )
-      .then(() => {
-        console.log("Record updated!");
-        history.push("/customer/list");
-      })
-      .catch((err) => {
-        alert(err);
-      });
+      // perform edit operation
     }
   };
 
   return (
     <CustomerEdit
       customerData={customerData.customer}
-      onHandleSubmit={onEditCustomerDataHandler}
+      onHandleSubmit={onEditustomerDataHandler}
       onHandleChange={onHandleChange}
       errors={errors}
     />
